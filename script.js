@@ -74,10 +74,6 @@ function equals() {
       console.log("switch", "Houston we have a problem!");
   }
 }
-//event listener
-function clickHandler() {}
-let btn = document.getElementsByClassName(".buttons");
-btn.addEventListener("click", clickHandler);
 
 //Console function tests
 add(3, 2);
