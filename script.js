@@ -75,6 +75,8 @@ function equals() {
   }
 }
 
+
+
 //Console function tests
 add(3, 2);
 subtract(3, 2);
