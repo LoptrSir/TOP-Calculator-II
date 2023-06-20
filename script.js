@@ -1,25 +1,26 @@
 let display = 0;
-let num1 = "0";
-let operand = undefined; //wen value assigned re-enable decimal click
-let num2 = "0";
+let result = 0;
+let num1 = "";
+let operand = ""; //when value assigned re-enable decimal click
+let num2 = "";
 
 //basic math functions
 function add(num1, num2) {
-  display = num1 + num2;
-  console.log("+", display);
-  return display;
+ result = num1 + num2;
+  console.log("add",result);
+  return result;
 }
 
 function subtract(num1, num2) {
-  display = num1 - num2;
-  console.log("-", display);
-  return display;
+ result = Number(num1 - num2);
+  console.log("sub",result);
+  return result;
 }
 
 function multiply(num1, num2) {
-  display = num1 * num2;
-  console.log("*", display);
-  return display;
+ result = num1 * num2;
+  console.log("mult",result);
+  return result;
 }
 
 function divide(num1, num2) {
@@ -27,60 +28,106 @@ function divide(num1, num2) {
     console.log("divide by zero? Hoser!");
     return alert("cannot divide by zero");
   } else {
-    display = num1 / num2;
-    console.log("/", display);
-    return display;
+   result = num1 / num2;
+    console.log("div",result);
+    return result;
   }
 }
 
 // need code to turn off event listener to prevent multiple events of . in single num.
 //Then it needs to be turned off once num1 changes to num2 or upon clear
-function decimal(operand) {
-  if (operand == undefined) {
-    num1 += ".";
-    //click disable
-  } else {
-    num2 += ".";
-    //click disable
-  }
-}
+// function decimal(operand) {
+//   if (operand == undefined) {
+//     num1 += ".";
+//     //click disable
+//   } else {
+//     num2 += ".";
+//     //click disable
+//   }
+// }
 
 // do i need a decimal click re-enable here?  I believe so.
-function clear(num1, num2) {
-  display = 0;
-  num1 = undefined;
-  operand = undefined;
-  num2 = undefined;
-  console.log("clear", display, num1, operand, num2);
+function clear() {
+ result = 0;
+ display = 0;
+  num1 = "";
+  operand = "";
+  num2 = "";
+  console.log("clear", num1, operand, num2);
 }
 // switch case to trigger equals button press.
 // This needs to be wrapped in the equals button call/function otherwise it will trigger once read by comp.
 function equals() {
   // re-enable decimal listener? or just use on clear?
+  console.log('equals');
   switch (operand) {
     case "+":
-      add();
-      break;
+        console.log(operand);
+      add(parseFloat(num1), parseFloat(num2));
+           break;
     case "-":
-      subtract();
-      break;
+        console.log(operand);
+      subtract(parseFloat(num1), parseFloat(num2));
+            break;
     case "*":
-      multiply();
-      break;
+        console.log(operand);
+      multiply(parseFloat(num1), parseFloat(num2));
+         break;
     case "/":
-      divide();
-      break;
+        console.log(operand);
+      divide(parseFloat(num1), parseFloat(num2));
+            break;
     default:
       console.log("switch", "Houston we have a problem!");
   }
 }
 
+//event listener
+let buttons = document.getElementById("buttons");
+buttons.addEventListener("click", clickHandler);
 
+function clickHandler(e) {
+  let clicked = e.target;
+ 
+
+  if (clicked.classList.contains("nbr")) {
+    let number = clicked.id;
+    if (operand === "") {
+      num1 += number;
+    } else {
+      num2 += number;
+ //     console.log("nbr", num1, num2);
+    }
+  } else if (clicked.classList.contains("oper")) {
+    operand = clicked.id;
+  } else if (clicked.id === "equals") {
+    console.log('=');
+    equals();
+  } else if (clicked.id === "clear") {
+    clear();
+  } else if (clicked.id === "back") {
+    if (operand === "") {
+      num1 = num1.slice(0, -1);
+    } else {
+      num2 = num2.slice(0, -1);
+    }
+  } else if (clicked.id === "decimal") {
+    if (operand === "") {
+      num1 += ".";
+      //click disable
+    } else {
+      num2 += ".";
+      //click disable
+    }
+  }
+  console.log("clicked", clicked);
+  console.log(num1, operand, num2);
+}
 
 //Console function tests
-add(3, 2);
-subtract(3, 2);
-multiply(3, 2);
-divide(2, 0);
-divide(4, 2);
-clear();
+// add(3, 2);
+// subtract(3, 2);
+// multiply(3, 2);
+// divide(2, 0);
+// divide(4, 2);
+// clear();
