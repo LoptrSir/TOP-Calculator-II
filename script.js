@@ -3,36 +3,34 @@ let result = 0;
 let num1 = "";
 let operand = "";
 let num2 = "";
-let displayElement = document.getElementById("output");
+let outputElement = document.getElementById("output");
 
 //basic math functions
 function add(num1, num2) {
-  (result = num1 + num2), (display = result);
+  result = display = num1 + num2; // combining result and display to a single line.
   console.log("add", result, "d", display);
   return result;
 }
 
 function subtract(num1, num2) {
-  (result = Number(num1 - num2)), (display = result);
+  result = display = num1 - num2;
   console.log("sub", result, "d", display);
   return result;
 }
 
 function multiply(num1, num2) {
-  (result = num1 * num2), (display = result);
+  result = display = num1 * num2;
   console.log("mult", result, "d", display);
   return result;
 }
 
 function divide(num1, num2) {
-  if (num2 === 0) {
-    console.log("divide by zero? Hoser!");
-    return alert("cannot divide by zero");
-  } else {
-    (result = num1 / num2), (display = result);
-    console.log("div", result, "d", display);
-    return result;
-  }
+  result =
+    num2 === 0
+      ? (console.log("divide by zero? Hoser!"),
+        alert("cannot divide by zero"),
+        0)
+      : (display = num1 / num2);
 }
 
 function clear() {
@@ -95,8 +93,8 @@ function clickHandler(e) {
   } else if (clicked.id === "equals") {
     console.log("=");
     equals();
-    display = parseFloat(display).toFixed(3); // Limit result to 3 decimal points
-    display = display.replace(/\.?0*$/, ""); // Remove trailing zeros
+    display = parseFloat(display.toFixed(3)).toString();
+    display = display.replace(/\.?0*$/, "");
   } else if (clicked.id === "clear") {
     clear();
   } else if (clicked.id === "back") {
@@ -122,15 +120,20 @@ function clickHandler(e) {
 
   console.log("clicked", clicked, "d", display);
   console.log(num1, operand, num2, "d", display);
-  displayElement.textContent = display;
+  outputElement.textContent = display;
 }
 
-//Console function tests
-// add(3, 2);
-// subtract(3, 2);
-// multiply(3, 2);
-// divide(2, 0);
-// divide(4, 2);
-// clear();
+//This version 6/20 15.36 functions as desired. Streamlined code.
+// streamlined involved changing:
+//(result = num1 + num2), (display = result);  TO
+// result = display = num1 + num2;     This reduces processes.
 
-//This version 6/20 14:19 functions as desired.  Will explore streamlining code.
+// if (num2 === 0) {
+//   console.log("divide by zero? Hoser!");
+//   return alert("cannot divide by zero");
+// } else {
+//   (result = num1 / num2), (display = result);
+//   console.log("div", result, "d", display);
+//   return result;
+// }           TO
+// result = num2 === 0 ? (console.log("divide by zero? Hoser!"), alert("cannot divide by zero"), 0) : (display = num1 / num2);  // Declaring result to 0 prevents errors from occuring.
