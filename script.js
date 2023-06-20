@@ -39,10 +39,10 @@ function divide(num1, num2) {
 // function decimal(operand) {
 //   if (operand == undefined) {
 //     num1 += ".";
-//     //click disable
+//    if (!num1.includes('.'   )
 //   } else {
 //     num2 += ".";
-//     //click disable
+//    if (!num1.includes('.'   )
 //   }
 // }
 
@@ -113,11 +113,14 @@ function clickHandler(e) {
     }
   } else if (clicked.id === "decimal") {
     if (operand === "") {
-      num1 += ".";
-      //click disable
+          if (!num1.includes('.')){
+            num1 += ".";
+          }
     } else {
-      num2 += ".";
-      //click disable
+      
+     if (!num2.includes('.')){
+        num2 += ".";
+     }
     }
   }
   console.log("clicked", clicked);
