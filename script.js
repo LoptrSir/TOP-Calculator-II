@@ -42,8 +42,32 @@ function clear() {
   console.log("clear", num1, operand, num2, "d", display);
 }
 
-function equals() {
-  console.log("equals");
+// function equals() {
+//   console.log("equals");
+//   switch (operand) {
+//     case "+":
+//       console.log(operand);
+//       add(parseFloat(num1), parseFloat(num2));
+//       break;
+//     case "-":
+//       console.log(operand);
+//       subtract(parseFloat(num1), parseFloat(num2));
+//       break;
+//     case "*":
+//       console.log(operand);
+//       multiply(parseFloat(num1), parseFloat(num2));
+//       break;
+//     case "/":
+//       console.log(operand);
+//       divide(parseFloat(num1), parseFloat(num2));
+//       break;
+//     default:
+//       console.log("switch", "Houston we have a problem!");
+//   }
+// }
+
+
+function performCalculation(){
   switch (operand) {
     case "+":
       console.log(operand);
@@ -65,6 +89,31 @@ function equals() {
       console.log("switch", "Houston we have a problem!");
   }
 }
+
+function equals() {
+  console.log("equals");
+  const calculationString = display.replace(/[^0-9+\-*/.]/g, "");
+  console.log('cs', calculationString);
+  const calculations = calculationString.split(/([-+*/])/);
+  console.log('c', calculations);
+
+  result = parseFloat(calculations[0]);
+  display = result.toString();
+
+  for (let i = 1; i < calculations.length; i += 2) {
+    operand = calculations[i];
+    num1 = display;
+    num2 = calculations[i + 1];
+
+    performCalculation();
+
+    display = result.toString();
+  }
+outputElement.textContext = display;
+}
+
+//
+//
 
 let buttons = document.getElementById("buttons");
 buttons.addEventListener("click", clickHandler);
@@ -105,8 +154,8 @@ function clickHandler(e) {
   } else if (clicked.id === "equals") {
     console.log("=");
     equals();
-    display = parseFloat(display.toFixed(3)).toString();
-    display = display.replace(/(\.\d*?[1-9])0*$/, "$1");
+    display = parseFloat(display).toFixed(3).toString();
+    display = display.replace(/\.?0*$/, "");
   } else if (clicked.id === "clear") {
     clear();
   } else if (clicked.id === "back") {
@@ -135,4 +184,4 @@ function clickHandler(e) {
   outputElement.textContent = display;
 }
 
-// This stable version 6/22/23 allows for negative numbers.
+// This iteration 6/22 13:19 supports multiple operands, but shits the bed with negative numbers.  GPT is proving incompetent in helping thus far.
